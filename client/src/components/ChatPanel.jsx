@@ -52,7 +52,7 @@ export default function ChatPanel({ botId, botName }) {
         </button>
       </div>
 
-      <div ref={scrollRef} className="flex-1 p-4 md:p-8 overflow-y-auto overscroll-contain space-y-6 flex flex-col relative z-10">
+      <div ref={scrollRef} className="flex-1 min-h-0 p-4 md:p-8 overflow-y-auto space-y-6 flex flex-col relative z-10">
         {messages.map((msg, i) => (
           <div
             key={i}
