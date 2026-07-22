@@ -10,11 +10,21 @@ import Settings from './pages/Settings'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [contentHeight, setContentHeight] = useState('calc(100vh - 64px)')
   const location = useLocation()
 
   useEffect(() => {
     setSidebarOpen(false)
   }, [location.pathname])
+
+  useEffect(() => {
+    const vp = window.visualViewport
+    if (!vp) return
+    const handler = () => setContentHeight(`${vp.height - 64}px`)
+    vp.addEventListener('resize', handler)
+    handler()
+    return () => vp.removeEventListener('resize', handler)
+  }, [])
 
   return (
     <div className="bg-background text-on-surface min-h-screen overflow-hidden">
@@ -26,7 +36,7 @@ export default function App() {
           onClick={() => setSidebarOpen(false)}
         />
       )}
-      <div className="md:ml-[320px] mt-16 h-[calc(100vh-64px)] overflow-y-auto">
+      <div className="md:ml-[320px] mt-16 overflow-y-auto" style={{ height: contentHeight }}>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />

@@ -30,7 +30,7 @@ export default function BotConfigPanel({ botId, botName }) {
   }
 
   return (
-    <section className="bg-surface p-4 md:p-8 h-full overflow-y-auto border-b lg:border-b-0 lg:border-r border-outline-variant">
+    <section className="bg-surface p-4 md:p-8 h-full overflow-y-auto overscroll-contain border-b lg:border-b-0 lg:border-r border-outline-variant">
       <div className="max-w-xl mx-auto space-y-8">
         <div className="flex items-center justify-between">
           <div>
