@@ -64,11 +64,13 @@ export default function AppBar({ onMenuToggle }) {
           {activeBot && (
             <span className="text-sm text-on-surface-variant hidden lg:inline">/ {activeBot.name}</span>
           )}
-          <nav className="hidden lg:flex items-center gap-8 ml-8">
-            <a className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" href="https://console.groq.com/docs" target="_blank" rel="noreferrer">Docs</a>
-            <a className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" href="https://github.com" target="_blank" rel="noreferrer">Community</a>
-            <a className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" href="https://groq.com/support" target="_blank" rel="noreferrer">Support</a>
-          </nav>
+          {!activeBot && (
+            <nav className="hidden lg:flex items-center gap-8 ml-8">
+              <a className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" href="https://console.groq.com/docs" target="_blank" rel="noreferrer">Docs</a>
+              <a className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" href="https://github.com" target="_blank" rel="noreferrer">Community</a>
+              <a className="text-sm font-medium text-on-surface-variant hover:text-on-surface transition-all" href="https://groq.com/support" target="_blank" rel="noreferrer">Support</a>
+            </nav>
+          )}
         </div>
         <div className="flex items-center gap-4">
           <div className="hidden sm:flex items-center gap-2 bg-surface-container-lowest px-4 py-2 rounded-full border border-outline-variant relative">
