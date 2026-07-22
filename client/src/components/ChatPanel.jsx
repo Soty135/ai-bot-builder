@@ -6,10 +6,12 @@ import toast from 'react-hot-toast';
 export default function ChatPanel({ botId, botName }) {
   const { messages, isLoading, send, clearChat } = useChat(botId);
   const [input, setInput] = useState('');
-  const chatEndRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [messages, isLoading]);
 
   const handleSubmit = (e) => {
@@ -50,7 +52,7 @@ export default function ChatPanel({ botId, botName }) {
         </button>
       </div>
 
-      <div className="flex-1 p-4 md:p-8 overflow-y-auto space-y-6 flex flex-col relative z-10">
+      <div ref={scrollRef} className="flex-1 p-4 md:p-8 overflow-y-auto space-y-6 flex flex-col relative z-10">
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -95,7 +97,6 @@ export default function ChatPanel({ botId, botName }) {
           </div>
         )}
 
-        <div ref={chatEndRef} />
       </div>
 
       <div className="p-4 md:p-8 bg-surface-dim relative z-20">
