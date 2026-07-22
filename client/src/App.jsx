@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
 import AppBar from './components/AppBar'
@@ -10,7 +10,7 @@ import Settings from './pages/Settings'
 
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [contentHeight, setContentHeight] = useState('calc(100vh - 64px)')
+  const contentRef = useRef(null)
   const location = useLocation()
 
   useEffect(() => {
@@ -19,10 +19,16 @@ export default function App() {
 
   useEffect(() => {
     const vp = window.visualViewport
-    if (!vp) return
-    const handler = () => setContentHeight(`${vp.height - 64}px`)
+    if (!vp || !contentRef.current) return
+    const handler = () => {
+      const diff = window.innerHeight - vp.height
+      if (diff > 150) {
+        contentRef.current.style.height = `${vp.height - 64}px`
+      } else {
+        contentRef.current.style.height = 'calc(100vh - 64px)'
+      }
+    }
     vp.addEventListener('resize', handler)
-    handler()
     return () => vp.removeEventListener('resize', handler)
   }, [])
 
@@ -36,7 +42,7 @@ export default function App() {
           onClick={() => setSidebarOpen(false)}
         />
       )}
-      <div className="md:ml-[320px] mt-16 overflow-y-auto" style={{ height: contentHeight }}>
+      <div ref={contentRef} className="md:ml-[320px] mt-16 h-[calc(100vh-64px)] overflow-y-auto">
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
