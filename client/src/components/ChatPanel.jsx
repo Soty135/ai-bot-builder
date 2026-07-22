@@ -27,7 +27,7 @@ export default function ChatPanel({ botId, botName }) {
 
   return (
     <section className="bg-surface-dim relative flex flex-col overflow-hidden h-full">
-      <div className="glass-panel sticky top-0 z-5 px-4 md:px-8 py-4 flex items-center justify-between">
+      <div className="glass-panel px-4 md:px-8 py-4 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">

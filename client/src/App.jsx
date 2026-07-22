@@ -42,7 +42,7 @@ export default function App() {
           onClick={() => setSidebarOpen(false)}
         />
       )}
-      <div ref={contentRef} className="md:ml-[320px] mt-16 h-[calc(100vh-64px)] overflow-y-auto">
+      <div ref={contentRef} className={`md:ml-[320px] mt-16 h-[calc(100vh-64px)] ${location.pathname.startsWith('/bot/') ? 'overflow-hidden' : 'overflow-y-auto'}`}>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
