@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Support Bot Builder - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .typing-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #4edea3;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "surface-container-highest": "#2d3449",
+                "on-primary-container": "#00422b",
+                "on-surface-variant": "#bbcabf",
+                "on-primary-fixed": "#002113",
+                "outline-variant": "#3c4a42",
+                "primary": "#4edea3",
+                "on-primary": "#003824",
+                "surface-tint": "#4edea3",
+                "tertiary-container": "#19aee8",
+                "on-surface": "#dae2fd",
+                "surface-bright": "#31394d",
+                "primary-fixed": "#6ffbbe",
+                "secondary-container": "#3131c0",
+                "tertiary-fixed": "#c4e7ff",
+                "on-secondary-fixed-variant": "#2f2ebe",
+                "on-error": "#690005",
+                "secondary-fixed-dim": "#c0c1ff",
+                "surface-dim": "#0b1326",
+                "on-primary-fixed-variant": "#005236",
+                "on-tertiary-fixed": "#001e2c",
+                "outline": "#86948a",
+                "tertiary": "#7bd0ff",
+                "on-tertiary": "#00354a",
+                "on-secondary": "#1000a9",
+                "inverse-primary": "#006c49",
+                "inverse-on-surface": "#283044",
+                "on-secondary-container": "#b0b2ff",
+                "surface-container-lowest": "#060e20",
+                "surface-container-low": "#131b2e",
+                "surface": "#0b1326",
+                "tertiary-fixed-dim": "#7bd0ff",
+                "on-tertiary-container": "#003e55",
+                "error": "#ffb4ab",
+                "primary-fixed-dim": "#4edea3",
+                "inverse-surface": "#dae2fd",
+                "primary-container": "#10b981",
+                "on-secondary-fixed": "#07006c",
+                "on-tertiary-fixed-variant": "#004c69",
+                "error-container": "#93000a",
+                "surface-variant": "#2d3449",
+                "surface-container-high": "#222a3d",
+                "surface-container": "#171f33",
+                "on-error-container": "#ffdad6",
+                "on-background": "#dae2fd",
+                "secondary": "#c0c1ff",
+                "secondary-fixed": "#e1e0ff",
+                "background": "#0b1326"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "xs": "0.5rem",
+                "xl": "3rem",
+                "sm": "1rem",
+                "gutter": "24px",
+                "margin-safe": "32px",
+                "base": "4px",
+                "lg": "2rem",
+                "md": "1.5rem"
+              },
+              "fontFamily": {
+                "body-sm": ["Inter"],
+                "headline-lg": ["Inter"],
+                "display-lg": ["Inter"],
+                "code-sm": ["Geist"],
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "label-md": ["Geist"],
+                "body-lg": ["Inter"],
+                "headline-lg-mobile": ["Inter"]
+              },
+              "fontSize": {
+                "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                "code-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+                "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                "label-md": ["14px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-hidden">
+<!-- Sidebar (Shell Component) -->
+<aside class="h-screen w-[320px] fixed left-0 top-0 bg-surface-container border-r border-outline-variant flex flex-col h-full py-md px-sm hidden md:flex">
+<div class="mb-xl px-xs">
+<h1 class="font-headline-md text-headline-md font-bold text-primary">AI Studio</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant opacity-70">Pro Plan</p>
+</div>
+<nav class="flex-1 space-y-xs">
+<div class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-sm p-sm rounded-lg text-primary font-bold border-r-2 border-primary bg-surface-variant cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+<span class="font-body-md text-body-md">Bot Builder</span>
+</div>
+<div class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">database</span>
+<span class="font-body-md text-body-md">Knowledge Base</span>
+</div>
+<div class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-body-md text-body-md">Analytics</span>
+</div>
+<div class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</div>
+</nav>
+<div class="pt-md border-t border-outline-variant space-y-xs">
+<button class="w-full flex items-center justify-center gap-xs py-sm rounded-xl bg-primary text-on-primary font-bold transition-transform active:scale-95 mb-md">
+<span class="material-symbols-outlined">add</span>
+                New Bot
+            </button>
+<div class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer">
+<span class="material-symbols-outlined">help</span>
+<span>Help</span>
+</div>
+<div class="flex items-center gap-sm p-sm rounded-lg text-on-surface-variant font-medium hover:bg-surface-variant transition-colors cursor-pointer">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</div>
+</div>
+</aside>
+<!-- Top AppBar (Shell Component) -->
+<header class="fixed top-0 right-0 left-0 md:left-[320px] h-16 bg-surface-container-high border-b border-outline-variant shadow-sm flex justify-between items-center px-lg h-full z-10">
+<div class="flex items-center gap-md">
+<span class="font-headline-md text-headline-md font-black text-primary">Bot Builder</span>
+<nav class="hidden lg:flex items-center gap-lg ml-xl">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" href="#">Docs</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" href="#">Community</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all" href="#">Support</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<div class="hidden sm:flex items-center gap-xs bg-surface-container-lowest px-sm py-xs rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-40 placeholder:text-outline" placeholder="Search templates..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary px-md py-xs rounded-full font-bold text-sm active:opacity-80 transition-opacity">
+                Publish Bot
+            </button>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="material-symbols-outlined cursor-pointer hover:text-on-surface">notifications</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center border border-outline-variant cursor-pointer overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio headshot of a software developer with a clean, tech-oriented look. The subject is wearing a dark, modern hoodie and glasses, set against a dark, moody charcoal studio background with subtle cyan rim lighting. High-end portrait photography style with a shallow depth of field, conveying intelligence and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd5qeQmWKdswCr5cjr0phwF25XUcHLEF3x1e4fhQ0Aizvk6ZC18hMGjHHj7A7rskAMBANyrNO4ehD-Tm-y8ZWkPowCY14PnbLRnzZrms9H6OP4ORnozgPY4g2Zbm6lORUskUuHcsQ-yeV8U5rU7oIW8IpL2JRYZwEGNaafnMZ4I40DyL2S5ovrnP6OBvHqHqasJsQDRQt7sAU8gVdkGWwXqJpyNcvcYf3I_gTrV_jbYBwhNZ0d76okFg"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="md:ml-[320px] mt-16 h-[calc(100vh-64px)] grid grid-cols-1 lg:grid-cols-2">
+<!-- Left Panel: Bot Configuration -->
+<section class="bg-surface p-xl overflow-y-auto border-r border-outline-variant">
+<div class="max-w-xl mx-auto space-y-xl">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md font-bold mb-xs">Bot Configuration</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Train your assistant on your specific business logic and persona.</p>
+</div>
+<div class="w-12 h-12 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined text-[28px]">settings_suggest</span>
+</div>
+</div>
+<form class="space-y-lg">
+<!-- Input: Business Name -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface">Business Name</label>
+<input class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none" placeholder="Enter your business name" type="text" value="Nexus Tech Solutions"/>
+</div>
+<!-- Textarea: Knowledge Base -->
+<div class="space-y-xs">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-surface">Knowledge Base / FAQ</label>
+<span class="text-[10px] uppercase font-bold tracking-widest text-outline">Context Limit: 2,048 Tokens</span>
+</div>
+<textarea class="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none font-code-sm text-code-sm" placeholder="Paste your company policies, FAQs, or pricing here..." rows="8">Q: What is the turnaround time?
+A: Usually 3-5 business days for standard audits.
+Q: Do you offer 24/7 support?
+A: Pro members receive priority 24/7 monitoring, while basic members have access during business hours.
+Q: Refund policy?
+A: 30-day money-back guarantee if the initial integration fails.</textarea>
+</div>
+<!-- Dropdown: Response Tone -->
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface">AI Response Tone</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-sm focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none">
+<option>Professional &amp; Technical</option>
+<option>Friendly &amp; Approachable</option>
+<option>Concise &amp; Direct</option>
+<option>Empathetic &amp; Warm</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant">expand_more</span>
+</div>
+</div>
+<!-- Logic Chips -->
+<div class="flex flex-wrap gap-xs py-sm">
+<span class="px-sm py-1 bg-secondary-container/20 border border-secondary-container text-secondary text-[11px] font-bold rounded-full uppercase tracking-tighter">LLM: GPT-4o</span>
+<span class="px-sm py-1 bg-primary-container/20 border border-primary-container text-primary text-[11px] font-bold rounded-full uppercase tracking-tighter">Intent: Sales &amp; Support</span>
+<span class="px-sm py-1 bg-surface-container-highest border border-outline-variant text-on-surface-variant text-[11px] font-bold rounded-full uppercase tracking-tighter">Streaming: Enabled</span>
+</div>
+<button class="w-full bg-primary text-on-primary py-md rounded-xl font-bold font-headline-md text-body-md flex items-center justify-center gap-sm hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-primary/10" type="submit">
+<span class="material-symbols-outlined">auto_fix_high</span>
+                        Save &amp; Update Bot Configuration
+                    </button>
+</form>
+</div>
+</section>
+<!-- Right Panel: Live Chat Simulation -->
+<section class="bg-surface-dim relative flex flex-col overflow-hidden">
+<!-- Background WebGL/Shader Placeholder -->
+
+<!-- Chat Header -->
+<div class="glass-panel sticky top-0 z-20 px-lg py-md flex items-center justify-between">
+<div class="flex items-center gap-sm">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined">smart_toy</span>
+</div>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-primary border-2 border-surface-container rounded-full"></div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md font-bold">Nexus Assistant</h3>
+<span class="text-[11px] text-primary uppercase font-bold tracking-widest flex items-center gap-1">
+<span class="w-1 h-1 bg-primary rounded-full animate-pulse"></span>
+                            Online
+                        </span>
+</div>
+</div>
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-xs text-sm font-medium" onclick="clearChat()">
+<span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+                    Clear Chat
+                </button>
+</div>
+<!-- Chat Messaging Area -->
+<div class="flex-1 p-lg overflow-y-auto space-y-lg flex flex-col relative z-10" id="chat-area">
+<!-- AI Message -->
+<div class="flex gap-sm max-w-[85%]">
+<div class="w-8 h-8 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-[18px] mt-1">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+</div>
+<div class="bg-surface-container-high text-on-surface p-md rounded-2xl rounded-tl-none border border-outline-variant shadow-sm">
+<p class="font-body-sm text-body-sm">Hello! I'm your Nexus Tech support assistant, currently configured with your latest documentation. How can I help you today?</p>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-sm max-w-[85%] self-end flex-row-reverse">
+<div class="w-8 h-8 shrink-0 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container mt-1">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div class="bg-secondary-container/20 text-on-surface p-md rounded-2xl rounded-tr-none border border-secondary-container/30 shadow-sm">
+<p class="font-body-sm text-body-sm">What's the turnaround time for a standard audit?</p>
+</div>
+</div>
+<!-- AI Message (Typing Indicator) -->
+<div class="flex gap-sm max-w-[85%]" id="typing-indicator">
+<div class="w-8 h-8 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-[18px] mt-1">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+</div>
+<div class="bg-surface-container-high p-md rounded-2xl rounded-tl-none border border-outline-variant flex items-center gap-1 shadow-sm">
+<div class="typing-dot"></div>
+<div class="typing-dot"></div>
+<div class="typing-dot"></div>
+</div>
+</div>
+<!-- Real AI Response (Hidden initially, shown after delay) -->
+<div class="hidden flex gap-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 duration-500" id="delayed-response">
+<div class="w-8 h-8 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-[18px] mt-1">
+<span class="material-symbols-outlined text-[16px]">smart_toy</span>
+</div>
+<div class="bg-surface-container-high text-on-surface p-md rounded-2xl rounded-tl-none border border-outline-variant shadow-sm">
+<p class="font-body-sm text-body-sm">According to our current configuration, standard audits typically take between 3 to 5 business days to complete.</p>
+</div>
+</div>
+</div>
+<!-- Chat Footer -->
+<div class="p-lg bg-surface-dim relative z-20">
+<div class="glass-panel rounded-2xl flex items-center px-md py-xs border border-outline-variant group focus-within:border-primary/50 transition-all">
+<button class="p-sm text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<input class="flex-1 bg-transparent border-none focus:ring-0 text-on-surface font-body-sm px-sm" onkeydown="if(event.key === 'Enter') sendMessage(this)" placeholder="Test your bot's knowledge..." type="text"/>
+<button class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center active:scale-90 transition-transform shadow-lg shadow-primary/20" onclick="sendMessage(document.querySelector('input[type=text]'))">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<p class="text-center text-[10px] text-outline mt-sm uppercase font-bold tracking-widest">Preview Mode - Interactions are not recorded</p>
+</div>
+</section>
+</main>
+<script>
+        // Micro-interactions for the chat simulation
+        function sendMessage(input) {
+            if (!input.value.trim()) return;
+            
+            const chatArea = document.getElementById('chat-area');
+            const userMsg = input.value;
+            input.value = '';
+
+            // Render User Message
+            const userDiv = document.createElement('div');
+            userDiv.className = 'flex gap-sm max-w-[85%] self-end flex-row-reverse animate-in fade-in slide-in-from-bottom-2 duration-300';
+            userDiv.innerHTML = `
+                <div class="w-8 h-8 shrink-0 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container mt-1">
+                    <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">person</span>
+                </div>
+                <div class="bg-secondary-container/20 text-on-surface p-md rounded-2xl rounded-tr-none border border-secondary-container/30 shadow-sm">
+                    <p class="font-body-sm text-body-sm">${userMsg}</p>
+                </div>
+            `;
+            chatArea.appendChild(userDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            // Show typing indicator
+            const typing = document.getElementById('typing-indicator');
+            chatArea.appendChild(typing); // move to bottom
+            typing.classList.remove('hidden');
+            chatArea.scrollTop = chatArea.scrollHeight;
+
+            // Simulate AI reply delay
+            setTimeout(() => {
+                typing.classList.add('hidden');
+                const aiDiv = document.createElement('div');
+                aiDiv.className = 'flex gap-sm max-w-[85%] animate-in fade-in slide-in-from-bottom-2 duration-500';
+                aiDiv.innerHTML = `
+                    <div class="w-8 h-8 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-[18px] mt-1">
+                        <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                    </div>
+                    <div class="bg-surface-container-high text-on-surface p-md rounded-2xl rounded-tl-none border border-outline-variant shadow-sm">
+                        <p class="font-body-sm text-body-sm">Understood. I am processing your request regarding "${userMsg}" using the Technical Response persona. Is there anything specific from the knowledge base you'd like to dive into?</p>
+                    </div>
+                `;
+                chatArea.appendChild(aiDiv);
+                chatArea.scrollTop = chatArea.scrollHeight;
+            }, 1800);
+        }
+
+        function clearChat() {
+            const chatArea = document.getElementById('chat-area');
+            chatArea.innerHTML = `
+                <div class="flex gap-sm max-w-[85%]">
+                    <div class="w-8 h-8 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-[18px] mt-1">
+                        <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                    </div>
+                    <div class="bg-surface-container-high text-on-surface p-md rounded-2xl rounded-tl-none border border-outline-variant shadow-sm">
+                        <p class="font-body-sm text-body-sm">Session cleared. How can I help you test your bot further?</p>
+                    </div>
+                </div>
+                <div id="typing-indicator" class="hidden flex gap-sm max-w-[85%]">
+                    <div class="w-8 h-8 shrink-0 rounded-full bg-surface-container-highest flex items-center justify-center text-[18px] mt-1">
+                        <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                    </div>
+                    <div class="bg-surface-container-high p-md rounded-2xl rounded-tl-none border border-outline-variant flex items-center gap-1 shadow-sm">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize typing simulation on load
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('typing-indicator').classList.add('hidden');
+                document.getElementById('delayed-response').classList.remove('hidden');
+            }, 2000);
+        }
+    </script>
+</body></html>
