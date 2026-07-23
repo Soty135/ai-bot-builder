@@ -8,6 +8,7 @@ const chatRoutes = require('./routes/chat');
 const botsRoutes = require('./routes/bots');
 const sessionsRoutes = require('./routes/sessions');
 const analyticsRoutes = require('./routes/analytics');
+const embedRoutes = require('./routes/embed');
 
 const app = express();
 const prisma = new PrismaClient();
@@ -23,6 +24,7 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/bots', botsRoutes);
 app.use('/api/chat/sessions', sessionsRoutes);
 app.use('/api/analytics', analyticsRoutes);
+app.use('/api/embed', embedRoutes);
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok' });
