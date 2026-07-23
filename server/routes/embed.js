@@ -57,20 +57,29 @@ router.get('/:id', async (req, res) => {
     .chat-panel.open { display: flex; animation: slideUp 0.3s ease; }
     @keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     .chat-header {
-      background: #1a73e8; color: white; padding: 16px 20px;
+      background: linear-gradient(135deg, #1a73e8, #4285f4); color: white; padding: 16px 20px;
       display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(26,115,232,0.25);
     }
     .chat-header-avatar {
-      width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.2);
-      display: flex; align-items: center; justify-content: center; font-size: 18px;
+      width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.18);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      backdrop-filter: blur(4px);
     }
-    .chat-header-info h3 { font-size: 14px; font-weight: 600; }
-    .chat-header-info span { font-size: 11px; opacity: 0.85; }
+    .chat-header-avatar svg { width: 22px; height: 22px; fill: white; }
+    .chat-header-info h3 { font-size: 15px; font-weight: 800; letter-spacing: 0.2px; }
+    .chat-header-info .status { font-size: 11px; display: flex; align-items: center; gap: 5px; opacity: 0.9; }
+    .chat-header-info .status::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: #4ade80; display: inline-block; box-shadow: 0 0 4px rgba(74,222,128,0.6);
+    }
     .chat-header-close {
-      margin-left: auto; background: none; border: none; color: white;
-      cursor: pointer; font-size: 20px; padding: 4px; line-height: 1; opacity: 0.8;
+      margin-left: auto; background: rgba(255,255,255,0.15); border: none; color: white;
+      cursor: pointer; width: 28px; height: 28px; border-radius: 8px; font-size: 18px;
+      display: flex; align-items: center; justify-content: center; opacity: 0.85;
+      transition: background 0.2s, opacity 0.2s;
     }
-    .chat-header-close:hover { opacity: 1; }
+    .chat-header-close:hover { opacity: 1; background: rgba(255,255,255,0.25); }
     .chat-messages {
       flex: 1; overflow-y: auto; padding: 16px; display: flex;
       flex-direction: column; gap: 12px; background: #f8f9fa;
@@ -119,17 +128,17 @@ router.get('/:id', async (req, res) => {
 
   var btn = document.createElement('button');
   btn.className = 'widget-btn';
-  btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" fill="white"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.07A7.001 7.001 0 0 1 7.07 19H6a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM9.5 14a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>';
   shadow.appendChild(btn);
 
   var panel = document.createElement('div');
   panel.className = 'chat-panel';
   panel.innerHTML = \`
     <div class="chat-header">
-      <div class="chat-header-avatar">\uD83E\uDD16</div>
+      <div class="chat-header-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1.07A7.001 7.001 0 0 1 7.07 19H6a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2zM9.5 14a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm5 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg></div>
       <div class="chat-header-info">
         <h3>\${BOT_NAME}</h3>
-        <span>Online</span>
+        <span class="status">Online</span>
       </div>
       <button class="chat-header-close">\u00D7</button>
     </div>
