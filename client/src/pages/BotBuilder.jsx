@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchBot } from '../api/bots';
 import BotConfigPanel from '../components/BotConfigPanel';
 import ChatPanel from '../components/ChatPanel';
@@ -10,7 +10,6 @@ export default function BotBuilder() {
   const [bot, setBot] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('chat');
-  const mainRef = useRef(null);
 
   useEffect(() => {
     if (!id) return;
@@ -20,21 +19,6 @@ export default function BotBuilder() {
       .catch(() => navigate('/dashboard'))
       .finally(() => setLoading(false));
   }, [id, navigate]);
-
-  useEffect(() => {
-    const vp = window.visualViewport;
-    if (!vp || !mainRef.current) return;
-    const handler = () => {
-      const diff = window.innerHeight - vp.height;
-      if (diff > 150) {
-        mainRef.current.style.height = `${vp.height - 64}px`;
-      } else {
-        mainRef.current.style.height = '';
-      }
-    };
-    vp.addEventListener('resize', handler);
-    return () => vp.removeEventListener('resize', handler);
-  }, []);
 
   if (loading) {
     return (
@@ -47,7 +31,7 @@ export default function BotBuilder() {
   if (!bot) return null;
 
   return (
-    <main ref={mainRef} className="h-full flex flex-col min-h-0">
+    <main className="h-full flex flex-col min-h-0">
       <div className="md:hidden flex border-b border-outline-variant bg-surface-container shrink-0">
         <button
           onClick={() => setActiveTab('config')}

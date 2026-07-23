@@ -24,12 +24,18 @@ export default function App() {
       const diff = window.innerHeight - vp.height
       if (diff > 150) {
         contentRef.current.style.height = `${vp.height - 64}px`
+        contentRef.current.style.transform = `translateY(${vp.offsetTop}px)`
       } else {
         contentRef.current.style.height = 'calc(100vh - 64px)'
+        contentRef.current.style.transform = ''
       }
     }
     vp.addEventListener('resize', handler)
-    return () => vp.removeEventListener('resize', handler)
+    vp.addEventListener('scroll', handler)
+    return () => {
+      vp.removeEventListener('resize', handler)
+      vp.removeEventListener('scroll', handler)
+    }
   }, [])
 
   return (
