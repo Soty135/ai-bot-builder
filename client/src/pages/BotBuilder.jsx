@@ -73,7 +73,7 @@ export default function BotBuilder() {
         </button>
       </div>
 
-      <div className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-2">
+      <div className="flex-1 min-h-0 grid grid-rows-1 grid-cols-1 lg:grid-cols-2">
         <div className={`${activeTab === 'config' ? 'block' : 'hidden'} md:block h-full`}>
           <BotConfigPanel botId={id} botName={bot.name} />
         </div>
